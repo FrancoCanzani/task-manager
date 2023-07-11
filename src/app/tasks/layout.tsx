@@ -3,11 +3,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import TasksContext from './tasksContext';
-
 import Header from '../components/header/header';
 import Aside from '../components/aside/aside';
-import { useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,16 +18,13 @@ export default function TasksLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [tasks, setTasks] = useState([]);
   return (
     <html lang='en'>
       <body className={`${inter.className}`}>
         <Header />
         <main className='flex'>
-          <Aside tasks={tasks} setTasks={setTasks} />
-          <TasksContext.Provider value={tasks}>
-            {children}
-          </TasksContext.Provider>
+          <Aside />
+          {children}
         </main>
       </body>
     </html>
