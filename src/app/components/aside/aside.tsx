@@ -4,7 +4,7 @@ import Timer from './timer';
 
 export default function Aside() {
   return (
-    <aside className='px-4 py-6 flex flex-col border-r border-gray-300'>
+    <aside className='px-4 py-6 flex flex-col border-r-2 border-gray-400'>
       <TaskCreator />
       <NoteCreator />
       <Timer />
