@@ -1,35 +1,21 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import Image from 'next/image';
+import useIsOpen from '@/hooks/useIsOpen';
 
-import rightArrow from '../../../../public/svg/keyboardArrowRight.svg';
-import downArrow from '../../../../public/svg/keyboardArrowDown.svg';
+import CreatorButton from './creatorButton';
 
 export default function TaskCreator() {
-  const [isOpen, setIsOpen] = useState(true);
+  const { isOpen, handleOpen } = useIsOpen();
   const [task, setTask] = useState('');
 
   function handleAddTask(e: FormEvent) {
     e.preventDefault();
   }
 
-  const handleOpen = () => (isOpen ? setIsOpen(false) : setIsOpen(true));
-
   return (
     <div className='bg-gray-200 flex flex-col items-center rounded-md p-3'>
-      <button
-        onClick={handleOpen}
-        className='flex items-center justify-between w-60'
-      >
-        <span className='mr-1 text-lg font-semibold'>Tasks</span>
-        <Image
-          src={isOpen ? downArrow : rightArrow}
-          alt='Right arrow'
-          width={20}
-          height={20}
-        />
-      </button>
+      <CreatorButton text={'Tasks'} isOpen={isOpen} handleOpen={handleOpen} />
       <form
         onSubmit={handleAddTask}
         className={`mt-4 ${isOpen ? 'block' : 'hidden'}`}
@@ -43,6 +29,7 @@ export default function TaskCreator() {
             value={task}
             id='name'
             placeholder='Task'
+            autoComplete='off'
             className='w-full rounded-md px-2 py-1'
           />
         </div>
@@ -53,6 +40,7 @@ export default function TaskCreator() {
           <input
             type='text'
             value={task}
+            autoComplete='off'
             id='name'
             placeholder='Label'
             className='w-full rounded-md px-2 py-1'
@@ -64,7 +52,9 @@ export default function TaskCreator() {
             id='priority'
             className='w-full px-2 py-1 rounded-md'
           >
-            <option value='low'>--Priority--</option>
+            <option value='low' className='text-gray-400'>
+              --Priority--
+            </option>
             <option value='High'>High</option>
             <option value='Medium'>Medium</option>
             <option value='Low'>Low</option>
@@ -80,7 +70,7 @@ export default function TaskCreator() {
         </div>
         <button
           type='submit'
-          className='bg-white px-2 py-1 rounded-md text-sm font-semibold'
+          className='bg-white hover:bg-gray-100 px-2 py-1 rounded-md text-sm font-semibold'
         >
           Save
         </button>
