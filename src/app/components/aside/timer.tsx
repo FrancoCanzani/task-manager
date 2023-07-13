@@ -17,9 +17,13 @@ import { FormEvent, useState, ChangeEvent } from 'react';
 
 export default function Timer() {
   const { isOpen, handleOpen } = useIsOpen();
-  const { isRunning, setIsRunning, countdown, setCountdown, handleStop } =
-    useTimer();
+  const { isRunning, setIsRunning, countdown, setCountdown } = useTimer();
   const [duration, setDuration] = useState({ minutes: 25, seconds: 0 });
+
+  function handleStop() {
+    setIsRunning(false);
+    setCountdown(duration);
+  }
 
   const handleMinutesChange = (e: ChangeEvent<HTMLInputElement>) => {
     const minutes = parseInt(e.target.value);

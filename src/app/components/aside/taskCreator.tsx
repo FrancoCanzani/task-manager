@@ -26,7 +26,6 @@ export default function TaskCreator() {
           </label>
           <input
             type='text'
-            value={task}
             id='name'
             placeholder='Task'
             autoComplete='off'
@@ -39,7 +38,6 @@ export default function TaskCreator() {
           </label>
           <input
             type='text'
-            value={task}
             autoComplete='off'
             id='name'
             placeholder='Label'

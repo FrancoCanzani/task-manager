@@ -34,10 +34,5 @@ export default function useTimer() {
     return () => clearInterval(interval); // Clean up the interval on component unmount
   }, [isRunning]);
 
-  function handleStop() {
-    setIsRunning(false);
-    setCountdown({ minutes: 25, seconds: 0 });
-  }
-
-  return { isRunning, setIsRunning, countdown, setCountdown, handleStop };
+  return { isRunning, setIsRunning, countdown, setCountdown };
 }
