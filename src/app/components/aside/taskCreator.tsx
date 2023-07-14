@@ -5,16 +5,44 @@ import useIsOpen from '@/hooks/useIsOpen';
 
 import CreatorButton from './creatorButton';
 
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { app } from '../../../firebase/firebase';
+
+const auth = getAuth(app);
+
+interface taskProps {
+  taskName: string | null;
+  taskLabel: string | null;
+  taskPriority: string | null;
+  taskDescription: string | null;
+  userId: string | null;
+}
+
 export default function TaskCreator() {
   const { isOpen, handleOpen } = useIsOpen();
-  const [task, setTask] = useState('');
+
+  const [task, setTask] = useState<taskProps>({
+    taskName: null,
+    taskLabel: null,
+    taskPriority: null,
+    taskDescription: null,
+    userId: null,
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      setTask({ ...task, userId: uid });
+    }
+  });
 
   function handleAddTask(e: FormEvent) {
     e.preventDefault();
+    console.log(task);
   }
 
   return (
-    <div className='bg-gray-200 flex flex-col items-center rounded-md p-3'>
+    <div className='bg-cyan-500 flex flex-col items-center rounded-md p-3'>
       <CreatorButton text={'Tasks'} isOpen={isOpen} handleOpen={handleOpen} />
       <form
         onSubmit={handleAddTask}
@@ -30,6 +58,7 @@ export default function TaskCreator() {
             placeholder='Task'
             autoComplete='off'
             className='w-full rounded-md px-2 py-1'
+            onChange={(e) => setTask({ ...task, taskName: e.target.value })}
           />
         </div>
         <div className='mt-2'>
@@ -42,6 +71,7 @@ export default function TaskCreator() {
             id='name'
             placeholder='Label'
             className='w-full rounded-md px-2 py-1'
+            onChange={(e) => setTask({ ...task, taskLabel: e.target.value })}
           />
         </div>
         <div className='mt-2'>
@@ -49,6 +79,7 @@ export default function TaskCreator() {
             name='priority'
             id='priority'
             className='w-full px-2 py-1 rounded-md'
+            onChange={(e) => setTask({ ...task, taskLabel: e.target.value })}
           >
             <option value='low' className='text-gray-400'>
               --Priority--
@@ -64,6 +95,9 @@ export default function TaskCreator() {
             id='description'
             placeholder='Description'
             className='rounded-md px-2 py-1 w-full'
+            onChange={(e) =>
+              setTask({ ...task, taskDescription: e.target.value })
+            }
           ></textarea>
         </div>
         <button

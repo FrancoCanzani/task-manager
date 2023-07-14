@@ -25,9 +25,7 @@ export default function NoteCreator() {
           rows={5}
           cols={23}
           className='rounded-md block px-2 py-1 w-full'
-        >
-          Note
-        </textarea>
+        ></textarea>
         <button
           type='submit'
           className='bg-white mt-2 hover:bg-gray-100 px-2 py-1 rounded-md text-sm font-semibold'

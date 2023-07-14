@@ -1,4 +1,3 @@
 export default function Notes() {
-    return <section>All notes</section>;
-  }
-  
+  return <section className='min-h-max'>All notes</section>;
+}

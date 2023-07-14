@@ -45,7 +45,7 @@ export default function Timer() {
       <CreatorButton text={'Timer'} isOpen={isOpen} handleOpen={handleOpen} />
       <div className='flex items-center w-full mt-2 justify-between px-2 py-1 rounded-md'>
         <span
-          className={`bg-black text-white px-2 py-1 font-light rounded-md text-xl ${robotoMono.className}`}
+          className={`bg-black text-white px-2 py-1 font-black rounded-md text-xl ${robotoMono.className}`}
         >
           {`${countdown.minutes}:${countdown.seconds
             .toString()
@@ -55,7 +55,7 @@ export default function Timer() {
           {!isRunning ? (
             <button
               onClick={() => setIsRunning(true)}
-              className='bg-black hover:opacity-80 rounded-full p-1.5'
+              className='bg-black rounded-full p-1.5'
             >
               <Image
                 src={play}
@@ -67,7 +67,7 @@ export default function Timer() {
           ) : (
             <button
               onClick={() => setIsRunning(false)}
-              className='bg-black hover:opacity-80 rounded-full p-1.5'
+              className='bg-black rounded-full p-1.5'
             >
               <Image
                 src={pause}
@@ -79,7 +79,7 @@ export default function Timer() {
           )}
           <button
             onClick={handleStop}
-            className='bg-black ml-1 hover:opacity-80 rounded-full p-1.5'
+            className='bg-black ml-1 rounded-full p-1.5'
           >
             <Image src={stop} width={20} height={20} alt='Stop timer button' />
           </button>

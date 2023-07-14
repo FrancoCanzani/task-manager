@@ -1,3 +1,3 @@
 export default function Tasks() {
-  return <section>All Tasks</section>;
+  return <section className='min-h-full'>All Tasks</section>;
 }
