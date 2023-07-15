@@ -1,44 +1,59 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import { FormEvent, useState, useEffect } from 'react';
 import useIsOpen from '@/hooks/useIsOpen';
 
 import CreatorButton from './creatorButton';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { app } from '../../../firebase/firebase';
+import { app, db } from '../../../firebase/firebase';
+
+import { collection, addDoc } from 'firebase/firestore';
 
 const auth = getAuth(app);
 
 interface taskProps {
-  taskName: string | null;
-  taskLabel: string | null;
-  taskPriority: string | null;
-  taskDescription: string | null;
+  name: string | null;
+  label: string | null;
+  priority: string | null;
+  description: string | null;
   userId: string | null;
+  taskId: string | null;
 }
 
 export default function TaskCreator() {
   const { isOpen, handleOpen } = useIsOpen();
 
   const [task, setTask] = useState<taskProps>({
-    taskName: null,
-    taskLabel: null,
-    taskPriority: null,
-    taskDescription: null,
+    name: null,
+    label: null,
+    priority: null,
+    description: null,
     userId: null,
+    taskId: null,
   });
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      setTask({ ...task, userId: uid });
-    }
-  });
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        const taskId = uuidv4();
+        setTask({ ...task, userId: uid, taskId: taskId });
+      }
+    });
+  }, []);
 
-  function handleAddTask(e: FormEvent) {
+  async function handleAddTask(e: FormEvent) {
     e.preventDefault();
-    console.log(task);
+
+    try {
+      const taskRef = await addDoc(collection(db, 'tasks'), task);
+      console.log('Task added with ID:', taskRef.id);
+    } catch (error) {
+      console.error('Error adding task:', error);
+    }
   }
 
   return (
@@ -57,8 +72,9 @@ export default function TaskCreator() {
             id='name'
             placeholder='Task'
             autoComplete='off'
+            required
             className='w-full rounded-md px-2 py-1'
-            onChange={(e) => setTask({ ...task, taskName: e.target.value })}
+            onChange={(e) => setTask({ ...task, name: e.target.value })}
           />
         </div>
         <div className='mt-2'>
@@ -70,8 +86,9 @@ export default function TaskCreator() {
             autoComplete='off'
             id='name'
             placeholder='Label'
+            required
             className='w-full rounded-md px-2 py-1'
-            onChange={(e) => setTask({ ...task, taskLabel: e.target.value })}
+            onChange={(e) => setTask({ ...task, label: e.target.value })}
           />
         </div>
         <div className='mt-2'>
@@ -79,7 +96,7 @@ export default function TaskCreator() {
             name='priority'
             id='priority'
             className='w-full px-2 py-1 rounded-md'
-            onChange={(e) => setTask({ ...task, taskLabel: e.target.value })}
+            onChange={(e) => setTask({ ...task, priority: e.target.value })}
           >
             <option value='low' className='text-gray-400'>
               --Priority--
@@ -95,9 +112,7 @@ export default function TaskCreator() {
             id='description'
             placeholder='Description'
             className='rounded-md px-2 py-1 w-full'
-            onChange={(e) =>
-              setTask({ ...task, taskDescription: e.target.value })
-            }
+            onChange={(e) => setTask({ ...task, description: e.target.value })}
           ></textarea>
         </div>
         <button
