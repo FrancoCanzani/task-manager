@@ -1,9 +1,10 @@
 'use client';
 
-import rightArrow from '../../../../public/svg/keyboardArrowRight.svg';
-import { MouseEventHandler } from 'react';
-
 import Image from 'next/image';
+
+import rightArrow from '../../../../public/svg/keyboardArrowRight.svg';
+
+import { MouseEventHandler } from 'react';
 
 interface CreatorButtonProps {
   text: string;
@@ -11,7 +12,7 @@ interface CreatorButtonProps {
   handleOpen: MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function CreatorButton({
+export default function FeatureOpener({
   text,
   isOpen,
   handleOpen,

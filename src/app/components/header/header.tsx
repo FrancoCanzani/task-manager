@@ -1,4 +1,4 @@
-import SignOutButton from '../signOutButton';
+import SignOutButton from '../buttons/signOutButton';
 
 export default function Header() {
   return (

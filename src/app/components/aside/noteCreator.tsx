@@ -2,7 +2,8 @@
 
 import { FormEvent } from 'react';
 
-import CreatorButton from './creatorButton';
+import FeatureOpener from './featureOpener';
+
 import useIsOpen from '@/hooks/useIsOpen';
 
 export default function NoteCreator() {
@@ -13,7 +14,7 @@ export default function NoteCreator() {
   }
   return (
     <div className='bg-yellow-200 mt-6 flex flex-col items-center rounded-md p-3'>
-      <CreatorButton text={'Notes'} isOpen={isOpen} handleOpen={handleOpen} />
+      <FeatureOpener text={'Notes'} isOpen={isOpen} handleOpen={handleOpen} />
       <form
         onSubmit={handleAddNote}
         className={`mt-4 ${isOpen ? 'block' : 'hidden'}`}

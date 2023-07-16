@@ -1,8 +1,9 @@
+import Image from 'next/image';
+
+// Components
 import NoteCreator from './noteCreator';
 import TaskCreator from './taskCreator';
 import Timer from './timer';
-
-import Image from 'next/image';
 
 export default function Aside() {
   return (

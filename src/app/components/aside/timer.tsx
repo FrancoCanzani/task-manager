@@ -6,7 +6,7 @@ import { Roboto_Mono } from 'next/font/google';
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'] });
 
-import CreatorButton from './creatorButton';
+import FeatureOpener from './featureOpener';
 import useIsOpen from '@/hooks/useIsOpen';
 import useTimer from '@/hooks/useTimer';
 
@@ -42,7 +42,7 @@ export default function Timer() {
 
   return (
     <div className='bg-rose-700 mt-6 flex flex-col items-center rounded-md p-3'>
-      <CreatorButton text={'Timer'} isOpen={isOpen} handleOpen={handleOpen} />
+      <FeatureOpener text={'Timer'} isOpen={isOpen} handleOpen={handleOpen} />
       <div className='flex items-center w-full mt-2 justify-between px-2 py-1 rounded-md'>
         <span
           className={`bg-black text-white px-2 py-1 font-black rounded-md text-xl ${robotoMono.className}`}
